@@ -1103,31 +1103,19 @@ blockquote {
 
 /* Growing stages for YES button */
 .maafin-btn--yes.grow-1 {
-  font-size: 1.15rem;
-  padding: 18px 40px;
-}
-.maafin-btn--yes.grow-2 {
-  font-size: 1.35rem;
-  padding: 22px 50px;
+  transform: scale(1.1);
   box-shadow: 0 6px 30px rgba(46, 138, 91, 0.4);
 }
-.maafin-btn--yes.grow-3 {
-  font-size: 1.6rem;
-  padding: 26px 60px;
+.maafin-btn--yes.grow-2 {
+  transform: scale(1.2);
   box-shadow:
     0 8px 40px rgba(46, 138, 91, 0.5),
     0 0 30px rgba(92, 181, 133, 0.15);
 }
-.maafin-btn--yes.grow-4 {
-  font-size: 1.9rem;
-  padding: 30px 70px;
-  box-shadow:
-    0 10px 50px rgba(46, 138, 91, 0.6),
-    0 0 40px rgba(92, 181, 133, 0.2);
-}
-.maafin-btn--yes.grow-5 {
-  font-size: 2.3rem;
-  padding: 36px 80px;
+.maafin-btn--yes.grow-3 {
+  width: 100%; 
+  font-size: 1.5rem;
+  padding: 20px 10px;
   box-shadow:
     0 12px 60px rgba(46, 138, 91, 0.7),
     0 0 60px rgba(92, 181, 133, 0.3);
@@ -1153,6 +1141,7 @@ blockquote {
   color: var(--color-white-60);
   border-color: var(--color-white-20);
   font-weight: 400;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .maafin-btn--no:hover {
@@ -1163,30 +1152,22 @@ blockquote {
 
 /* Shrinking stages for NO button */
 .maafin-btn--no.shrink-1 {
-  font-size: 0.9rem;
-  padding: 12px 26px;
-  opacity: 0.8;
+  font-size: 0.85rem;
+  padding: 10px 24px;
+  opacity: 0.7;
 }
 .maafin-btn--no.shrink-2 {
-  font-size: 0.8rem;
-  padding: 10px 22px;
-  opacity: 0.6;
-}
-.maafin-btn--no.shrink-3 {
   font-size: 0.7rem;
-  padding: 8px 18px;
+  padding: 6px 16px;
   opacity: 0.4;
 }
-.maafin-btn--no.shrink-4 {
-  font-size: 0.6rem;
-  padding: 6px 14px;
-  opacity: 0.25;
-}
-.maafin-btn--no.shrink-5 {
-  font-size: 0.5rem;
-  padding: 4px 10px;
-  opacity: 0.1;
-  pointer-events: none; /* Can't click anymore */
+.maafin-btn--no.shrink-3 {
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+  position: absolute; /* Hide entirely */
+  margin: 0;
+  padding: 0;
 }
 
 /* Shake animation when clicking "no" */
@@ -1804,11 +1785,11 @@ blockquote {
    ============================================== */
 .back-to-top {
   position: fixed;
-  bottom: calc(var(--space-lg) + 60px);
+  bottom: calc(var(--space-lg) + 65px);
   right: var(--space-md);
   z-index: var(--z-audio);
-  width: 46px;
-  height: 46px;
+  width: 52px;
+  height: 52px;
   border-radius: var(--radius-full);
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
@@ -1935,6 +1916,13 @@ blockquote {
     bottom: var(--space-md);
     right: var(--space-sm);
     font-size: 1.1rem;
+  }
+
+  .back-to-top {
+    width: 46px;
+    height: 46px;
+    bottom: calc(var(--space-md) + 55px);
+    right: var(--space-sm);
   }
 
   .countdown__timer {

@@ -491,7 +491,7 @@
 
     // State
     attempt: 0,
-    maxAttempts: 5,
+    maxAttempts: 3,
 
     /** Messages that change with each "Tidak" click */
     stages: [
@@ -505,25 +505,13 @@
         emoji: '😢',
         title: 'Yakin Tidak Mau Maafin?',
         subtitle: 'Please... saya sudah menyesal. Maafin ya? 🥲',
-        counter: 'Percobaan 1 dari 5... ayolah 🙏',
+        counter: 'Percobaan 1 dari 3... ayolah 🙏',
       },
       {
         emoji: '😭',
         title: 'Masih Tidak Mau?!',
         subtitle: 'Hatiku remuk redam... tolonglah maafkan saya 💔',
-        counter: 'Percobaan 2 dari 5... kamu serius nih? 😰',
-      },
-      {
-        emoji: '🥹',
-        title: 'Seriusan Nih?!',
-        subtitle: 'Lihat, tombol "Iya" nya makin gede tuh... mending pencet aja ya? 😅',
-        counter: 'Percobaan 3 dari 5... tinggal 2 lagi loh! 😨',
-      },
-      {
-        emoji: '😤',
-        title: 'Ayolah Maafin!!',
-        subtitle: 'Kamu tega banget sih! Tombol nya udah GEDE BANGET tuh! 😤',
-        counter: 'Percobaan 4 dari 5... TERAKHIR NIH! 🚨',
+        counter: 'Percobaan 2 dari 3... kamu serius nih? 😰',
       },
       {
         emoji: '🤗',
@@ -658,32 +646,37 @@
 
     /** The segments on the wheel */
     segments: [
-      { label: 'Rp 10.000', color: '#2e8a5b', emoji: '💵' },
-      { label: 'Rp 50.000', color: '#c9a84c', emoji: '💰' },
+      { label: 'Rp 50.000', color: '#2e8a5b', emoji: '💰' },
+      { label: 'ZONK', color: '#d4a843', emoji: '😭' },
       { label: 'Rp 100.000', color: '#175234', emoji: '💸' },
-      { label: 'Rp 500.000', color: '#e8c255', emoji: '🤑' },
-      { label: 'Rp 1.000.000', color: '#226e47', emoji: '💎' },
-      { label: 'Rp 5.000.000', color: '#f0d27c', emoji: '🏆' },
-      { label: 'Rp 10.000.000', color: '#0d4f36', emoji: '👑' },
-      { label: 'Rp 0', color: '#d4a843', emoji: '😭' },
+      { label: 'ZONK', color: '#c9a84c', emoji: '😭' },
+      { label: 'Rp 500.000', color: '#226e47', emoji: '🤑' },
+      { label: 'ZONK', color: '#e8c255', emoji: '😭' },
+      { label: 'Rp 1.000.000', color: '#0d4f36', emoji: '💎' },
+      { label: 'ZONK', color: '#f0d27c', emoji: '😭' },
     ],
 
     /** Result messages — all humorous "THR dalam bentuk doa" */
     results: [
-      {
-        emoji: '💵',
-        title: 'Dapat Rp 10.000!',
-        text: 'Eh tapi THR-nya dalam bentuk doa aja dulu ya... Rp 10.000 doa buat kamu biar rezekinya lancar! Doa seharga 10rb nih, lumayan kan? 🙏😜',
-      },
       {
         emoji: '💰',
         title: 'Dapat Rp 50.000!',
         text: 'Wah lumayan Rp 50.000! Tapi... THR-nya dalam bentuk doa aja ya! Doanya 50rb perak buat kesehatan dan kebahagiaan kamu! 😁✨',
       },
       {
+        emoji: '😭',
+        title: 'YAH ZONK!',
+        text: 'Duh sayang sekali kamu belum beruntung dapet nominal uangnya! Gak apa-apa, sebagai gantinya ku doakan semoga kamu panjang umur, dimudahkan segala urusannya, dan keluargamu selalu dalam lindungan-Nya. Aamiin! 🤲',
+      },
+      {
         emoji: '💸',
         title: 'Dapat Rp 100.000!',
-        text: 'Rp 100.000 cuy! Eits tapi... THR-nya dalam bentuk doa dulu ya! 100rb doa biar kamu sukses dunia akhirat. Mau transfer? Nanti aja ya 😏',
+        text: 'Rp 100.000 cuy! Eits tapi... THR-nya dalam bentuk doa dulu ya! 100rb doa biar kamu sukses dunia akhirat. Uang mah bisa dicari, didoain dapet yang baik-baik itu lebih mahal harganya! ',
+      },
+      {
+        emoji: '😭',
+        title: 'YAH ZONK!',
+        text: 'Zonk mulu ya daritadi? 😂 Gak apa-apa! Uang bisa dicari, yang penting adalah pahala silaturahmi. Semoga di tahun yang akan datang, rezekimu dilipatgandakan oleh Allah SWT. Aamiin Ya Rabbal Alamin! 🙌',
       },
       {
         emoji: '🤑',
@@ -691,24 +684,19 @@
         text: 'SETENGAH JUTA! Tapi... THR-nya dalam bentuk doa aja dulu ya! 500rb doa supaya kamu sehat wal afiat. Sehat itu mahal loh, jadi anggap aja THR-nya jutaan! 🧠💰',
       },
       {
+        emoji: '😭',
+        title: 'YAH ZONK!',
+        text: 'Memang rezeki mah ngga bisa dipaksa! Tapi tenang, doaku menyertai hidup kamu: Semoga apapun jalan dan cita-cita yang kamu kejar saat ini diberikan kemudahan dan hasil yang terbaik. Aamiin! 🌟',
+      },
+      {
         emoji: '💎',
         title: 'Dapat Rp 1.000.000!',
-        text: 'SATU JUTA RUPIAH! Wah... sayang banget tapi THR-nya dalam bentuk doa aja dulu ya! Sejuta doa buat kamu biar rezekinya mengalir terus. Tahun depan baru transferan! 😇',
-      },
-      {
-        emoji: '🏆',
-        title: 'Dapat Rp 5.000.000!',
-        text: 'LIMA JUTAAA!! 🎉 Tapi... yaa THR-nya dalam bentuk doa aja dulu ya! 5 juta doa biar cepet dapet jodoh yang sholeh/sholehah. Mending jodoh seumur hidup dari pada 5 juta kan! 💍',
-      },
-      {
-        emoji: '👑',
-        title: 'Dapat Rp 10.000.000!',
-        text: 'SEPULUH JUTAAA!! JACKPOT! 🎊🎊 Ehhh tapi... THR-nya tetep dalam bentuk doa aja dulu ya! 10 juta doa buat kamu. Nasihat aja nih: "Hemat pangkal kaya!" 🤣🤣',
+        text: 'SATU JUTA RUPIAH! Wah... sayang banget tapi THR-nya dalam bentuk doa aja dulu ya! Sejuta doa buat kamu biar kebaikan dan rezekimu mengalir terus dari pintu rahmat Allah. Aamiin! 😇',
       },
       {
         emoji: '😭',
-        title: 'Dapat Rp 0!',
-        text: 'ZONK! Rp 0! 😂 Tapi jangan sedih... THR-nya dalam bentuk doa aja ya! Sabar ya... yang penting silaturahmi! Kalau silaturahmi lancar, rezeki juga lancar. Insya Allah! 🤲',
+        title: 'YAH ZONK!',
+        text: 'Dapet Rp 0 alias ZONK nih! 😂 Nggak dapet cuan nggak apa-apa, tapi doaku ini tulus: Semoga hari-harimu ke depan selalu dipenuhi dengan tawa, berkah, bahagia, dan kehangatan keluarga. Selamat Idul Fitri! 💖',
       },
     ],
 
