@@ -2,7 +2,6 @@
 
 Website ucapan Selamat Hari Raya Idul Fitri 1447 Hijriyah yang dibuat dengan desain modern, elegan, dan interaktif. Dibuat oleh **Kemas Alfath**.
 
-![Preview](assets/images/izin.jpeg)
 
 ---
 
