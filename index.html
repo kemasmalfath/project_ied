@@ -7,6 +7,13 @@
   <meta name="theme-color" content="#0a3d2a" />
   <title>Selamat Idul Fitri 1447 H — Mohon Maaf Lahir dan Batin</title>
 
+  <!-- Open Graph / Social Media Preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Selamat Idul Fitri 1447 H 🌙" />
+  <meta property="og:description" content="Mohon Maaf Lahir dan Batin — Taqabbalallahu Minna Wa Minkum. Dari Kemas Alfath." />
+  <meta property="og:image" content="assets/images/izin.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,6 +33,7 @@
     <div class="preloader__content">
       <div class="preloader__crescent">☪</div>
       <p class="preloader__text">Ramadhan Kareem</p>
+      <button id="preloader-enter" class="preloader__enter-btn">Buka Ucapan</button>
     </div>
   </div>
 
@@ -133,6 +141,45 @@
       <!-- Mosque silhouette at bottom -->
       <div class="hero__mosque" aria-hidden="true">
         <img src="assets/images/mosque_silhouette.png" alt="" loading="eager" />
+      </div>
+    </section>
+
+    <!-- ======== COUNTDOWN SECTION ======== -->
+    <section id="countdown" class="countdown-section">
+      <div class="container">
+        <header class="section-header">
+          <p class="section-header__label scroll-animate" data-animation="fade-up">⏳ Hitung Mundur ⏳</p>
+          <h2 class="section-header__title scroll-animate" data-animation="fade-up">
+            Menuju Ramadhan 1448 H
+          </h2>
+          <div class="section-header__divider scroll-animate" data-animation="scale-in" aria-hidden="true"></div>
+        </header>
+
+        <div class="countdown__card scroll-animate" data-animation="fade-up">
+          <p class="countdown__subtitle">Semoga kita dipertemukan kembali dengan bulan suci Ramadhan</p>
+          <div class="countdown__timer" id="countdown-timer">
+            <div class="countdown__unit">
+              <span class="countdown__number" id="cd-days">---</span>
+              <span class="countdown__label">Hari</span>
+            </div>
+            <div class="countdown__separator">:</div>
+            <div class="countdown__unit">
+              <span class="countdown__number" id="cd-hours">--</span>
+              <span class="countdown__label">Jam</span>
+            </div>
+            <div class="countdown__separator">:</div>
+            <div class="countdown__unit">
+              <span class="countdown__number" id="cd-minutes">--</span>
+              <span class="countdown__label">Menit</span>
+            </div>
+            <div class="countdown__separator">:</div>
+            <div class="countdown__unit">
+              <span class="countdown__number" id="cd-seconds">--</span>
+              <span class="countdown__label">Detik</span>
+            </div>
+          </div>
+          <p class="countdown__target-date">~18 Februari 2027 / 1 Ramadhan 1448 H <br> <span style="font-size: 0.8em; opacity: 0.6;">(*Tanggal merupakan perkiraan kasar)</span></p>
+        </div>
       </div>
     </section>
 
@@ -283,6 +330,54 @@
       </div>
     </section>
 
+    <!-- ======== THR ROULETTE SECTION ======== -->
+    <section id="thr-roulette" class="thr-section">
+      <div class="container">
+        <!-- Section header -->
+        <header class="section-header">
+          <p class="section-header__label scroll-animate" data-animation="fade-up">🎰 Coba Keberuntunganmu 🎰</p>
+          <h2 class="section-header__title scroll-animate" data-animation="fade-up">
+            THR Yang Kamu Dapatkan
+          </h2>
+          <div class="section-header__divider scroll-animate" data-animation="scale-in" aria-hidden="true"></div>
+        </header>
+
+        <div class="thr-roulette scroll-animate" data-animation="fade-up">
+          <!-- Spin Wheel -->
+          <div class="thr-roulette__wheel-container">
+            <!-- Pointer/Arrow -->
+            <div class="thr-roulette__pointer" aria-hidden="true">▼</div>
+            <!-- The wheel -->
+            <div class="thr-roulette__wheel" id="thr-wheel">
+              <canvas id="thr-canvas" width="320" height="320"></canvas>
+            </div>
+            <!-- Center circle -->
+            <div class="thr-roulette__center" aria-hidden="true">
+              <span>☪</span>
+            </div>
+          </div>
+
+          <!-- Spin Button -->
+          <button class="thr-roulette__spin-btn" id="thr-spin-btn" aria-label="Putar roulette THR">
+            <span class="thr-roulette__spin-btn-text">PUTAR!</span>
+          </button>
+
+          <!-- Result Panel (hidden initially) -->
+          <div class="thr-roulette__result" id="thr-result" hidden>
+            <div class="thr-roulette__result-emoji" id="thr-result-emoji">💸</div>
+            <h3 class="thr-roulette__result-title" id="thr-result-title">THR Kamu Adalah...</h3>
+            <p class="thr-roulette__result-text" id="thr-result-text">Loading...</p>
+            <button class="thr-roulette__retry-btn" id="thr-retry-btn">🔄 Putar Lagi</button>
+          </div>
+
+          <!-- Fun disclaimer -->
+          <p class="thr-roulette__disclaimer scroll-animate" data-animation="fade-up">
+            * THR ini bersifat spiritual dan tidak dapat ditukarkan di ATM 😜
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- ======== CLOSING SECTION ======== -->
     <section id="closing" class="closing">
       <div class="container">
@@ -315,6 +410,15 @@
       </div>
     </section>
   </main>
+
+  <!-- ============================================
+       BACK TO TOP BUTTON
+  ============================================= -->
+  <button id="back-to-top" class="back-to-top" aria-label="Kembali ke atas" title="Ke Atas">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
+  </button>
 
   <!-- ============================================
        FOOTER

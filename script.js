@@ -24,22 +24,25 @@
      ============================================ */
   const Preloader = {
     el: document.getElementById('preloader'),
-    minDisplayTime: 1800, // minimum ms to show preloader
+    enterBtn: document.getElementById('preloader-enter'),
 
     /** Hide the preloader and trigger page entry animations */
     hide() {
-      setTimeout(() => {
-        this.el.classList.add('is-hidden');
-        // Trigger hero animations after preloader hides
-        HeroAnimations.play();
-        // Start confetti after a short delay
-        setTimeout(() => Confetti.start(), 400);
-      }, this.minDisplayTime);
+      this.el.classList.add('is-hidden');
+      // Trigger hero animations after preloader hides
+      HeroAnimations.play();
+      // Start confetti after a short delay
+      setTimeout(() => Confetti.start(), 400);
+      // Play audio immediately (user just clicked, so browser allows it)
+      AudioController.tryAutoPlay();
     },
 
     init() {
-      // Start hiding when page is fully loaded
-      window.addEventListener('load', () => this.hide());
+      // Wait for page to load, then show the enter button
+      window.addEventListener('load', () => {
+        // Button is already visible, just attach click handler
+        this.enterBtn.addEventListener('click', () => this.hide());
+      });
     }
   };
 
@@ -329,22 +332,21 @@
   const AudioController = {
     toggleBtn: document.getElementById('audio-toggle'),
     audio: null,
-    isMuted: true,
+    isMuted: false,
+    hasAutoPlayed: false,
 
     /** Initialize audio with a takbiran sound */
     init() {
       // Create an audio element programmatically
       this.audio = new Audio();
       
-      // Use a publicly available takbiran audio
-      // If local file exists, use it; otherwise we handle gracefully
       this.audio.src = 'assets/audio/takbiran.mp3';
       this.audio.loop = true;
       this.audio.volume = 0.3;
       this.audio.preload = 'auto';
 
-      // Start as muted
-      this.toggleBtn.classList.add('is-muted');
+      // Start as NOT muted (we want it to play)
+      this.toggleBtn.classList.remove('is-muted');
 
       // Toggle handler
       this.toggleBtn.addEventListener('click', () => this.toggle());
@@ -355,11 +357,46 @@
       });
     },
 
+    /** Try to autoplay audio (called after preloader hides) */
+    tryAutoPlay() {
+      this.audio.play().then(() => {
+        this.isMuted = false;
+        this.hasAutoPlayed = true;
+        this.toggleBtn.classList.remove('is-muted');
+      }).catch(() => {
+        // Browser blocked autoplay — wait for first user interaction
+        console.log('Autoplay blocked. Will play on first interaction.');
+        this.setupInteractionFallback();
+      });
+    },
+
+    /** Fallback: play audio on first user interaction */
+    setupInteractionFallback() {
+      const playOnInteraction = () => {
+        if (!this.hasAutoPlayed) {
+          this.audio.play().then(() => {
+            this.isMuted = false;
+            this.hasAutoPlayed = true;
+            this.toggleBtn.classList.remove('is-muted');
+          }).catch(() => {});
+        }
+        // Remove listeners after first interaction
+        document.removeEventListener('click', playOnInteraction);
+        document.removeEventListener('touchstart', playOnInteraction);
+        document.removeEventListener('scroll', playOnInteraction);
+      };
+
+      document.addEventListener('click', playOnInteraction, { once: true });
+      document.addEventListener('touchstart', playOnInteraction, { once: true });
+      document.addEventListener('scroll', playOnInteraction, { once: true });
+    },
+
     /** Toggle audio play/pause */
     toggle() {
       if (this.isMuted) {
         this.audio.play().then(() => {
           this.isMuted = false;
+          this.hasAutoPlayed = true;
           this.toggleBtn.classList.remove('is-muted');
         }).catch((err) => {
           console.log('Audio playback error:', err.message);
@@ -601,6 +638,297 @@
   };
 
   /* ============================================
+     9.6. THR ROULETTE (Spin Wheel Game)
+     ============================================ */
+  const ThrRoulette = {
+    canvas: null,
+    ctx: null,
+    wheel: null,
+    spinBtn: null,
+    retryBtn: null,
+    resultPanel: null,
+    resultEmoji: null,
+    resultTitle: null,
+    resultText: null,
+
+    // Wheel state
+    currentAngle: 0,
+    isSpinning: false,
+    spinAnimationId: null,
+
+    /** The segments on the wheel */
+    segments: [
+      { label: 'Rp 10.000', color: '#2e8a5b', emoji: '💵' },
+      { label: 'Rp 50.000', color: '#c9a84c', emoji: '💰' },
+      { label: 'Rp 100.000', color: '#175234', emoji: '💸' },
+      { label: 'Rp 500.000', color: '#e8c255', emoji: '🤑' },
+      { label: 'Rp 1.000.000', color: '#226e47', emoji: '💎' },
+      { label: 'Rp 5.000.000', color: '#f0d27c', emoji: '🏆' },
+      { label: 'Rp 10.000.000', color: '#0d4f36', emoji: '👑' },
+      { label: 'Rp 0', color: '#d4a843', emoji: '😭' },
+    ],
+
+    /** Result messages — all humorous "THR dalam bentuk doa" */
+    results: [
+      {
+        emoji: '💵',
+        title: 'Dapat Rp 10.000!',
+        text: 'Eh tapi THR-nya dalam bentuk doa aja dulu ya... Rp 10.000 doa buat kamu biar rezekinya lancar! Doa seharga 10rb nih, lumayan kan? 🙏😜',
+      },
+      {
+        emoji: '💰',
+        title: 'Dapat Rp 50.000!',
+        text: 'Wah lumayan Rp 50.000! Tapi... THR-nya dalam bentuk doa aja ya! Doanya 50rb perak buat kesehatan dan kebahagiaan kamu! 😁✨',
+      },
+      {
+        emoji: '💸',
+        title: 'Dapat Rp 100.000!',
+        text: 'Rp 100.000 cuy! Eits tapi... THR-nya dalam bentuk doa dulu ya! 100rb doa biar kamu sukses dunia akhirat. Mau transfer? Nanti aja ya 😏',
+      },
+      {
+        emoji: '🤑',
+        title: 'Dapat Rp 500.000!',
+        text: 'SETENGAH JUTA! Tapi... THR-nya dalam bentuk doa aja dulu ya! 500rb doa supaya kamu sehat wal afiat. Sehat itu mahal loh, jadi anggap aja THR-nya jutaan! 🧠💰',
+      },
+      {
+        emoji: '💎',
+        title: 'Dapat Rp 1.000.000!',
+        text: 'SATU JUTA RUPIAH! Wah... sayang banget tapi THR-nya dalam bentuk doa aja dulu ya! Sejuta doa buat kamu biar rezekinya mengalir terus. Tahun depan baru transferan! 😇',
+      },
+      {
+        emoji: '🏆',
+        title: 'Dapat Rp 5.000.000!',
+        text: 'LIMA JUTAAA!! 🎉 Tapi... yaa THR-nya dalam bentuk doa aja dulu ya! 5 juta doa biar cepet dapet jodoh yang sholeh/sholehah. Mending jodoh seumur hidup dari pada 5 juta kan! 💍',
+      },
+      {
+        emoji: '👑',
+        title: 'Dapat Rp 10.000.000!',
+        text: 'SEPULUH JUTAAA!! JACKPOT! 🎊🎊 Ehhh tapi... THR-nya tetep dalam bentuk doa aja dulu ya! 10 juta doa buat kamu. Nasihat aja nih: "Hemat pangkal kaya!" 🤣🤣',
+      },
+      {
+        emoji: '😭',
+        title: 'Dapat Rp 0!',
+        text: 'ZONK! Rp 0! 😂 Tapi jangan sedih... THR-nya dalam bentuk doa aja ya! Sabar ya... yang penting silaturahmi! Kalau silaturahmi lancar, rezeki juga lancar. Insya Allah! 🤲',
+      },
+    ],
+
+    init() {
+      this.canvas = document.getElementById('thr-canvas');
+      this.wheel = document.getElementById('thr-wheel');
+      this.spinBtn = document.getElementById('thr-spin-btn');
+      this.retryBtn = document.getElementById('thr-retry-btn');
+      this.resultPanel = document.getElementById('thr-result');
+      this.resultEmoji = document.getElementById('thr-result-emoji');
+      this.resultTitle = document.getElementById('thr-result-title');
+      this.resultText = document.getElementById('thr-result-text');
+
+      if (!this.canvas || !this.spinBtn) return;
+
+      this.ctx = this.canvas.getContext('2d');
+      this.drawWheel();
+
+      // Event listeners
+      this.spinBtn.addEventListener('click', () => this.spin());
+      this.retryBtn.addEventListener('click', () => this.retry());
+    },
+
+    /** Draw the roulette wheel on canvas */
+    drawWheel() {
+      const ctx = this.ctx;
+      const size = this.canvas.width;
+      const center = size / 2;
+      const radius = size / 2;
+      const segCount = this.segments.length;
+      const arcSize = (2 * Math.PI) / segCount;
+
+      ctx.clearRect(0, 0, size, size);
+
+      this.segments.forEach((seg, i) => {
+        const startAngle = i * arcSize;
+        const endAngle = startAngle + arcSize;
+
+        // Draw segment
+        ctx.beginPath();
+        ctx.moveTo(center, center);
+        ctx.arc(center, center, radius, startAngle, endAngle);
+        ctx.closePath();
+        ctx.fillStyle = seg.color;
+        ctx.fill();
+
+        // Draw border between segments
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Draw text
+        ctx.save();
+        ctx.translate(center, center);
+        ctx.rotate(startAngle + arcSize / 2);
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 11px Inter, sans-serif';
+        ctx.shadowColor = 'rgba(0,0,0,0.5)';
+        ctx.shadowBlur = 3;
+        ctx.fillText(seg.label, radius - 15, 5);
+        ctx.restore();
+      });
+
+      // Inner shadow ring
+      const grad = ctx.createRadialGradient(center, center, radius * 0.85, center, center, radius);
+      grad.addColorStop(0, 'transparent');
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0.15)');
+      ctx.beginPath();
+      ctx.arc(center, center, radius, 0, 2 * Math.PI);
+      ctx.fillStyle = grad;
+      ctx.fill();
+    },
+
+    /** Spin the wheel */
+    spin() {
+      if (this.isSpinning) return;
+      this.isSpinning = true;
+      this.spinBtn.disabled = true;
+      this.resultPanel.hidden = true;
+
+      const segCount = this.segments.length;
+      const segAngle = 360 / segCount;
+
+      // Spin 5-10 full rotations plus a random offset
+      const extraRotations = (Math.floor(Math.random() * 5) + 5) * 360;
+      const randomOffset = Math.random() * 360;
+      const totalSpin = extraRotations + randomOffset;
+
+      const startAngle = this.currentAngle;
+      const endAngle = startAngle + totalSpin;
+      const duration = 4000 + Math.random() * 2000; // 4-6 seconds
+      const startTime = performance.now();
+
+      const animate = (now) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Ease out cubic for smooth deceleration
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = startAngle + totalSpin * eased;
+
+        this.currentAngle = current;
+        this.wheel.style.transform = `rotate(${current}deg)`;
+
+        if (progress < 1) {
+          this.spinAnimationId = requestAnimationFrame(animate);
+        } else {
+          // Spin completed!
+          this.currentAngle = endAngle;
+          this.isSpinning = false;
+          this.spinBtn.disabled = false;
+
+          // Calculate which segment is under the pointer (top = 270° in canvas coords)
+          const normalizedAngle = ((endAngle % 360) + 360) % 360;
+          const pointerAngle = ((270 - normalizedAngle) % 360 + 360) % 360;
+          const landedSegment = Math.floor(pointerAngle / segAngle) % segCount;
+
+          this.showResult(landedSegment);
+        }
+      };
+
+      requestAnimationFrame(animate);
+    },
+
+    /** Show the result card */
+    showResult(segmentIndex) {
+      const result = this.results[segmentIndex];
+      this.resultEmoji.textContent = result.emoji;
+      this.resultTitle.textContent = result.title;
+      this.resultText.textContent = result.text;
+      this.resultPanel.hidden = false;
+
+      // Re-trigger animation by removing and re-adding the element
+      this.resultPanel.style.animation = 'none';
+      void this.resultPanel.offsetWidth; // force reflow
+      this.resultPanel.style.animation = '';
+    },
+
+    /** Retry / spin again */
+    retry() {
+      this.resultPanel.hidden = true;
+    },
+  };
+
+  /* ============================================
+     9.7. COUNTDOWN TIMER (to next Ramadan)
+     ============================================ */
+  const CountdownTimer = {
+    // Ramadan 1448 H ~ February 18, 2027
+    targetDate: new Date('2027-02-18T00:00:00'),
+    daysEl: null,
+    hoursEl: null,
+    minutesEl: null,
+    secondsEl: null,
+    intervalId: null,
+
+    init() {
+      this.daysEl = document.getElementById('cd-days');
+      this.hoursEl = document.getElementById('cd-hours');
+      this.minutesEl = document.getElementById('cd-minutes');
+      this.secondsEl = document.getElementById('cd-seconds');
+
+      if (!this.daysEl) return;
+
+      this.update();
+      this.intervalId = setInterval(() => this.update(), 1000);
+    },
+
+    update() {
+      const now = new Date();
+      const diff = this.targetDate - now;
+
+      if (diff <= 0) {
+        this.daysEl.textContent = '0';
+        this.hoursEl.textContent = '00';
+        this.minutesEl.textContent = '00';
+        this.secondsEl.textContent = '00';
+        clearInterval(this.intervalId);
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      this.daysEl.textContent = days;
+      this.hoursEl.textContent = String(hours).padStart(2, '0');
+      this.minutesEl.textContent = String(minutes).padStart(2, '0');
+      this.secondsEl.textContent = String(seconds).padStart(2, '0');
+    },
+  };
+
+  /* ============================================
+     9.8. BACK TO TOP BUTTON
+     ============================================ */
+  const BackToTop = {
+    btn: document.getElementById('back-to-top'),
+
+    init() {
+      if (!this.btn) return;
+
+      // Show/hide based on scroll position
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > window.innerHeight) {
+          this.btn.classList.add('is-visible');
+        } else {
+          this.btn.classList.remove('is-visible');
+        }
+      }, { passive: true });
+
+      // Scroll to top on click
+      this.btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    },
+  };
+
+  /* ============================================
      10. INITIALIZATION
      ============================================ */
   function init() {
@@ -613,6 +941,9 @@
     CardGlowEffect.init();
     YearCounter.init();
     MaafinSaya.init();
+    ThrRoulette.init();
+    CountdownTimer.init();
+    BackToTop.init();
   }
 
   // Run when DOM is ready
