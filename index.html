@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ucapan Selamat Idul Fitri 1447 H — Mohon Maaf Lahir dan Batin. Taqabbalallahu Minna Wa Minkum." />
+  <meta name="theme-color" content="#0a3d2a" />
+  <title>Selamat Idul Fitri 1447 H — Mohon Maaf Lahir dan Batin</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ============================================
+       PRELOADER
+  ============================================= -->
+  <div id="preloader" class="preloader" aria-hidden="true">
+    <div class="preloader__content">
+      <div class="preloader__crescent">☪</div>
+      <p class="preloader__text">Ramadhan Kareem</p>
+    </div>
+  </div>
+
+  <!-- ============================================
+       CONFETTI CANVAS (full screen overlay)
+  ============================================= -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- ============================================
+       FLOATING ELEMENTS (decorative particles)
+  ============================================= -->
+  <div id="floating-elements" class="floating-elements" aria-hidden="true"></div>
+
+  <!-- ============================================
+       AUDIO CONTROL (persistent button)
+  ============================================= -->
+  <button id="audio-toggle" class="audio-toggle" aria-label="Toggle background audio" title="Musik Takbiran">
+    <span class="audio-toggle__icon audio-toggle__icon--on">🔊</span>
+    <span class="audio-toggle__icon audio-toggle__icon--off">🔇</span>
+    <span class="audio-toggle__pulse"></span>
+  </button>
+
+  <!-- ============================================
+       SCROLL PROGRESS BAR
+  ============================================= -->
+  <div id="scroll-progress" class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress__bar"></div>
+  </div>
+
+  <!-- ============================================
+       MAIN CONTENT
+  ============================================= -->
+  <main>
+    <!-- ======== HERO SECTION ======== -->
+    <section id="hero" class="hero">
+      <!-- Background decorative layers -->
+      <div class="hero__bg-pattern" aria-hidden="true"></div>
+      <div class="hero__stars" aria-hidden="true"></div>
+      <div class="hero__glow" aria-hidden="true"></div>
+
+      <!-- Ornamental top frame -->
+      <div class="hero__ornament hero__ornament--top" aria-hidden="true">
+        <svg viewBox="0 0 200 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,30 Q50,0 100,15 Q150,30 200,0" stroke="url(#goldGrad)" stroke-width="2" fill="none"/>
+          <defs>
+            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#c9a84c;stop-opacity:0.3"/>
+              <stop offset="50%" style="stop-color:#f0d27c;stop-opacity:1"/>
+              <stop offset="100%" style="stop-color:#c9a84c;stop-opacity:0.3"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="hero__content">
+        <!-- Profile avatar -->
+        <div class="hero__avatar animate-on-load" data-delay="100">
+          <div class="hero__avatar-ring"></div>
+          <img src="assets/images/izin.jpeg" alt="Kemas Alfath" class="hero__avatar-img" />
+        </div>
+
+        <!-- Personal intro -->
+        <p class="hero__intro animate-on-load" data-delay="200">Saya Kemas Alfath Mengucapkan</p>
+
+        <!-- Arabic calligraphy greeting -->
+        <p class="hero__arabic animate-on-load" data-delay="400">
+          تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ
+        </p>
+
+        <!-- Decorative line -->
+        <div class="hero__divider animate-on-load" data-delay="500" aria-hidden="true">
+          <span class="hero__divider-line"></span>
+          <span class="hero__divider-icon">☪</span>
+          <span class="hero__divider-line"></span>
+        </div>
+
+        <!-- Main heading -->
+        <h1 class="hero__title animate-on-load" data-delay="600">
+          Selamat<br />
+          <span class="hero__title-highlight">Idul Fitri</span>
+        </h1>
+
+        <!-- Year -->
+        <p class="hero__year animate-on-load" data-delay="800">
+          <span class="hero__year-number">1447</span>
+          <span class="hero__year-h">H</span>
+        </p>
+
+        <!-- Subtitle -->
+        <p class="hero__subtitle animate-on-load" data-delay="1000">
+          Mohon Maaf Lahir dan Batin
+        </p>
+
+        <!-- Scroll hint -->
+        <div class="hero__scroll-hint animate-on-load" data-delay="1400" aria-hidden="true">
+          <p class="hero__scroll-hint-text">Scroll ke bawah untuk ucapan lainnya</p>
+          <div class="hero__scroll-chevrons">
+            <span class="hero__scroll-chevron">❯</span>
+            <span class="hero__scroll-chevron">❯</span>
+            <span class="hero__scroll-chevron">❯</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mosque silhouette at bottom -->
+      <div class="hero__mosque" aria-hidden="true">
+        <img src="assets/images/mosque_silhouette.png" alt="" loading="eager" />
+      </div>
+    </section>
+
+    <!-- ======== GREETING SECTION ======== -->
+    <section id="greetings" class="greetings">
+      <div class="container">
+        <!-- Section header -->
+        <header class="section-header">
+          <p class="section-header__label scroll-animate" data-animation="fade-up">✦ Ucapan Lebaran ✦</p>
+          <h2 class="section-header__title scroll-animate" data-animation="fade-up">
+            Untaian Do'a &amp; Harapan
+          </h2>
+          <div class="section-header__divider scroll-animate" data-animation="scale-in" aria-hidden="true"></div>
+        </header>
+
+        <!-- Greeting Cards Grid -->
+        <div class="greetings__grid">
+          <!-- Card 1 -->
+          <article class="greeting-card scroll-animate" data-animation="fade-up" data-stagger="0">
+            <div class="greeting-card__glow" aria-hidden="true"></div>
+            <div class="greeting-card__icon" aria-hidden="true">🌙</div>
+            <blockquote class="greeting-card__text">
+              Di hari yang fitri ini, semoga segala kekhilafan dan kesalahan termaafkan. Semoga hati kita bersih, 
+              jiwa kita tenang, dan kebahagiaan selalu menyertai langkah kita.
+            </blockquote>
+            <div class="greeting-card__ornament" aria-hidden="true"></div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="greeting-card scroll-animate" data-animation="fade-up" data-stagger="1">
+            <div class="greeting-card__glow" aria-hidden="true"></div>
+            <div class="greeting-card__icon" aria-hidden="true">⭐</div>
+            <blockquote class="greeting-card__text">
+              Taqabbalallahu Minna Wa Minkum. Semoga amal ibadah kita selama Ramadhan diterima oleh Allah SWT 
+              dan menjadi bekal kebaikan di kehidupan kita selanjutnya.
+            </blockquote>
+            <div class="greeting-card__ornament" aria-hidden="true"></div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="greeting-card scroll-animate" data-animation="fade-up" data-stagger="2">
+            <div class="greeting-card__glow" aria-hidden="true"></div>
+            <div class="greeting-card__icon" aria-hidden="true">🕌</div>
+            <blockquote class="greeting-card__text">
+              Selamat merayakan kemenangan dengan keluarga tercinta. Semoga Idul Fitri tahun ini membawa 
+              keberkahan, kerukunan, dan kebahagiaan di setiap rumah.
+            </blockquote>
+            <div class="greeting-card__ornament" aria-hidden="true"></div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="greeting-card scroll-animate" data-animation="fade-up" data-stagger="3">
+            <div class="greeting-card__glow" aria-hidden="true"></div>
+            <div class="greeting-card__icon" aria-hidden="true">🤲</div>
+            <blockquote class="greeting-card__text">
+              Ya Allah, jadikanlah Idul Fitri ini sebagai awal yang baru bagi kami. Bersihkan hati kami dari 
+              dendam dan dengki, dan penuhi dengan cinta dan kasih sayang.
+            </blockquote>
+            <div class="greeting-card__ornament" aria-hidden="true"></div>
+          </article>
+
+          <!-- Card 5 -->
+          <article class="greeting-card scroll-animate" data-animation="fade-up" data-stagger="4">
+            <div class="greeting-card__glow" aria-hidden="true"></div>
+            <div class="greeting-card__icon" aria-hidden="true">🌿</div>
+            <blockquote class="greeting-card__text">
+              Satu bulan penuh berkah telah berlalu. Semoga nilai-nilai Ramadhan tetap melekat dalam diri kita — 
+              kesabaran, keikhlasan, dan rasa syukur yang tiada henti.
+            </blockquote>
+            <div class="greeting-card__ornament" aria-hidden="true"></div>
+          </article>
+
+          <!-- Card 6 -->
+          <article class="greeting-card scroll-animate" data-animation="fade-up" data-stagger="5">
+            <div class="greeting-card__glow" aria-hidden="true"></div>
+            <div class="greeting-card__icon" aria-hidden="true">💫</div>
+            <blockquote class="greeting-card__text">
+              Selamat Hari Raya Idul Fitri! Semoga kebahagiaan yang kita rasakan hari ini bukan hanya sesaat, 
+              melainkan menjadi sumber energi positif sepanjang tahun.
+            </blockquote>
+            <div class="greeting-card__ornament" aria-hidden="true"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== QUOTE SECTION (Islamic wisdom) ======== -->
+    <section id="quote" class="quote-section">
+      <div class="quote-section__bg-overlay" aria-hidden="true"></div>
+      <div class="container">
+        <div class="quote-section__card scroll-animate" data-animation="fade-up">
+          <div class="quote-section__mark" aria-hidden="true">"</div>
+          <blockquote class="quote-section__text">
+            Sesungguhnya sesudah kesulitan itu ada kemudahan. Maka apabila kamu telah selesai 
+            (dari sesuatu urusan), kerjakanlah dengan sungguh-sungguh (urusan) yang lain.
+          </blockquote>
+          <cite class="quote-section__cite">— QS. Al-Insyirah: 6-7</cite>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== MAAFIN SAYA SECTION ======== -->
+    <section id="maafin" class="maafin-section">
+      <div class="container">
+        <div class="maafin-card scroll-animate" data-animation="fade-up">
+          <!-- Cat image that shows alongside emoji -->
+          <div class="maafin-card__image" id="maafin-image">
+            <img src="assets/images/kucing_iziin.jpeg" alt="Kucing minta maaf" />
+          </div>
+
+          <!-- Emoji face that changes -->
+          <div class="maafin-card__emoji" id="maafin-emoji">🥺</div>
+
+          <!-- Title that changes -->
+          <h2 class="maafin-card__title" id="maafin-title">Maafin Saya Ya?</h2>
+
+          <!-- Subtitle that changes -->
+          <p class="maafin-card__subtitle" id="maafin-subtitle">
+            Kalau ada salah kata atau perbuatan, mohon dimaafkan ya 🙏
+            (coba pencet tombol "Tidak Saya Maafin 😤")
+          </p>
+
+          <!-- Buttons container -->
+          <div class="maafin-card__buttons" id="maafin-buttons">
+            <button class="maafin-btn maafin-btn--yes" id="btn-maafin-yes" aria-label="Iya, saya maafin">
+              Iya, Saya Maafin 💚
+            </button>
+            <button class="maafin-btn maafin-btn--no" id="btn-maafin-no" aria-label="Tidak, saya tidak maafin">
+              Tidak Saya Maafin 😤
+            </button>
+          </div>
+
+          <!-- Success state (hidden initially) -->
+          <div class="maafin-card__success" id="maafin-success" hidden>
+            <div class="maafin-card__success-emoji">🎉</div>
+            <h3 class="maafin-card__success-title">Terima Kasih!</h3>
+            <p class="maafin-card__success-text">
+              Jazakallahu Khairan, semoga Allah membalas kebaikan hatimu 🤍
+            </p>
+            <div class="maafin-card__success-confetti" id="maafin-confetti" aria-hidden="true"></div>
+          </div>
+
+          <!-- Attempt counter -->
+          <p class="maafin-card__counter" id="maafin-counter" hidden>
+            <span id="maafin-counter-text"></span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== CLOSING SECTION ======== -->
+    <section id="closing" class="closing">
+      <div class="container">
+        <div class="closing__content scroll-animate" data-animation="fade-up">
+          <p class="closing__arabic">عِيدٌ مُبَارَكٌ</p>
+          <h2 class="closing__title">Eid Mubarak</h2>
+          <div class="closing__divider" aria-hidden="true">
+            <span></span><span>☪</span><span></span>
+          </div>
+
+          <!-- Profile photo in closing -->
+          <div class="closing__avatar">
+            <div class="closing__avatar-ring"></div>
+            <img src="assets/images/izin.jpeg" alt="Kemas Alfath" class="closing__avatar-img" />
+          </div>
+
+          <p class="closing__text">
+            Dari lubuk hati yang paling dalam,<br />
+            <strong>Saya, Kemas Alfath,</strong> mengucapkan<br />
+            <strong>Selamat Idul Fitri 1447 Hijriyah.</strong><br />
+            Semoga kita semua kembali suci dan fitri.
+          </p>
+          <p class="closing__emoji" aria-hidden="true">🌙 ✨ 🕌 ✨ 🌙</p>
+        </div>
+      </div>
+
+      <!-- Bottom mosque imagery -->
+      <div class="closing__mosque" aria-hidden="true">
+        <img src="assets/images/mosque_silhouette.png" alt="" loading="lazy" />
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================
+       FOOTER
+  ============================================= -->
+  <footer class="footer">
+    <p class="footer__text">SEMOGA KITA DIPERTEMUKAN KEMBALI DENGAN BULAN RAMADHAN DI TAHUN DEPAN </p>
+     <p class="footer__text">AAMIIN YA RABBAL ALAMIN</p>
+  </footer>
+
+  <!-- ============================================
+       SCRIPTS
+  ============================================= -->
+  <script src="script.js"></script>
+</body>
+</html>
