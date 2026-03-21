@@ -935,12 +935,8 @@
 
     riddles: [
       {
-        question: 'Tahap 1 :\nBerapakah hasil dari 2 dikali 5?',
+        question: 'Berapakah hasil dari 2 dikali 5?',
         answers: ['10', 'sepuluh']
-      },
-      {
-        question: 'Tahap 2 :\nBerapakah hasil dahi hitungan berikut ini:\n(40²) - (300 ÷ 2) - 3 = ?\n\n(Petunjuk misal mau cepet: jawabanya adalah angka yang lumayan sering di sebut di bulan ramadhan ini )',
-        answers: ['1447', 'seribu empat ratus empat puluh tujuh']
       }
     ],
     currentStep: 0,
