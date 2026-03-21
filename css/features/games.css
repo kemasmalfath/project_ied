@@ -1,0 +1,639 @@
+/* === 11.5. MAAFIN SAYA SECTION (Interactive) === */
+
+.maafin-section {
+  position: relative;
+  padding: var(--space-3xl) 0;
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-dark) 0%,
+    var(--color-bg-secondary) 50%,
+    var(--color-bg-primary) 100%
+  );
+  overflow: hidden;
+}
+
+.maafin-card {
+  position: relative;
+  max-width: 550px;
+  margin: 0 auto;
+  text-align: center;
+  padding: var(--space-2xl) var(--space-xl);
+  background: var(--gradient-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* Cat image */
+.maafin-card__image {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto var(--space-sm);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--color-gold-500);
+  box-shadow: var(--shadow-glow-gold);
+  animation: catBob 3s ease-in-out infinite;
+  position: relative;
+}
+
+.maafin-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Blend overlay to match green bg */
+.maafin-card__image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 20px 8px rgba(13, 79, 54, 0.4);
+  pointer-events: none;
+}
+
+@keyframes catBob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-4px) rotate(-2deg); }
+  75% { transform: translateY(-4px) rotate(2deg); }
+}
+
+.maafin-card__emoji {
+  font-size: 4rem;
+  margin-bottom: var(--space-md);
+  animation: emojiPulse 2s ease-in-out infinite;
+  transition: all 0.5s var(--ease-out-back);
+}
+
+@keyframes emojiPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.maafin-card__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  color: var(--color-white);
+  margin-bottom: var(--space-sm);
+  transition: all 0.4s ease;
+}
+
+.maafin-card__subtitle {
+  font-size: var(--fs-base);
+  color: var(--color-white-60);
+  margin-bottom: var(--space-xl);
+  line-height: 1.6;
+  transition: all 0.4s ease;
+}
+
+/* Buttons container */
+.maafin-card__buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* Base button style */
+.maafin-btn {
+  position: relative;
+  padding: 14px 32px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-out-back);
+  border: 2px solid transparent;
+  outline: none;
+  white-space: nowrap;
+}
+
+/* YES button */
+.maafin-btn--yes {
+  background: linear-gradient(135deg, #2e8a5b 0%, #3aa56e 50%, #5cb585 100%);
+  color: var(--color-white);
+  border-color: rgba(92, 181, 133, 0.4);
+  box-shadow:
+    0 4px 15px rgba(46, 138, 91, 0.3),
+    0 0 0 0 rgba(92, 181, 133, 0);
+}
+
+.maafin-btn--yes:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 6px 25px rgba(46, 138, 91, 0.5),
+    0 0 20px rgba(92, 181, 133, 0.2);
+}
+
+/* Growing stages for YES button */
+.maafin-btn--yes.grow-1 {
+  transform: scale(1.1);
+  box-shadow: 0 6px 30px rgba(46, 138, 91, 0.4);
+}
+.maafin-btn--yes.grow-2 {
+  transform: scale(1.2);
+  box-shadow:
+    0 8px 40px rgba(46, 138, 91, 0.5),
+    0 0 30px rgba(92, 181, 133, 0.15);
+}
+.maafin-btn--yes.grow-3 {
+  width: 100%; 
+  font-size: 1.5rem;
+  padding: 20px 10px;
+  box-shadow:
+    0 12px 60px rgba(46, 138, 91, 0.7),
+    0 0 60px rgba(92, 181, 133, 0.3);
+  animation: yesButtonGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes yesButtonGlow {
+  0% {
+    box-shadow:
+      0 12px 60px rgba(46, 138, 91, 0.7),
+      0 0 60px rgba(92, 181, 133, 0.3);
+  }
+  100% {
+    box-shadow:
+      0 12px 80px rgba(46, 138, 91, 0.9),
+      0 0 80px rgba(92, 181, 133, 0.5);
+  }
+}
+
+/* NO button */
+.maafin-btn--no {
+  background: transparent;
+  color: var(--color-white-60);
+  border-color: var(--color-white-20);
+  font-weight: 400;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.maafin-btn--no:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--color-white-40);
+  color: var(--color-white-80);
+}
+
+/* Shrinking stages for NO button */
+.maafin-btn--no.shrink-1 {
+  font-size: 0.85rem;
+  padding: 10px 24px;
+  opacity: 0.7;
+}
+.maafin-btn--no.shrink-2 {
+  font-size: 0.7rem;
+  padding: 6px 16px;
+  opacity: 0.4;
+}
+.maafin-btn--no.shrink-3 {
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+  position: absolute; /* Hide entirely */
+  margin: 0;
+  padding: 0;
+}
+
+/* Shake animation when clicking "no" */
+@keyframes shakeNo {
+  0%, 100% { transform: translateX(0); }
+  10% { transform: translateX(-8px) rotate(-2deg); }
+  20% { transform: translateX(8px) rotate(2deg); }
+  30% { transform: translateX(-6px) rotate(-1deg); }
+  40% { transform: translateX(6px) rotate(1deg); }
+  50% { transform: translateX(-4px); }
+  60% { transform: translateX(4px); }
+  70% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+}
+
+.maafin-card.shake {
+  animation: shakeNo 0.6s ease-in-out;
+}
+
+/* Counter text */
+.maafin-card__counter {
+  margin-top: var(--space-md);
+  font-size: var(--fs-xs);
+  color: var(--color-white-40);
+  font-style: italic;
+}
+
+
+/* === 11.8. THR ROULETTE SECTION === */
+
+.thr-section {
+  position: relative;
+  padding: var(--space-3xl) 0;
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-primary) 0%,
+    var(--color-bg-dark) 40%,
+    var(--color-bg-secondary) 70%,
+    var(--color-bg-primary) 100%
+  );
+  overflow: hidden;
+}
+
+.thr-roulette {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Wheel Container */
+.thr-roulette__wheel-container {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  margin: 0 auto var(--space-lg);
+}
+
+/* Pointer arrow at top */
+.thr-roulette__pointer {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: var(--color-gold-400);
+  z-index: 10;
+  filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.6));
+  animation: pointerBounce 1s ease-in-out infinite;
+}
+
+@keyframes pointerBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(5px); }
+}
+
+/* The wheel (canvas wrapper) */
+.thr-roulette__wheel {
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  border: 5px solid var(--color-gold-500);
+  box-shadow:
+    0 0 40px rgba(201, 168, 76, 0.3),
+    0 0 80px rgba(201, 168, 76, 0.1),
+    inset 0 0 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: transform 0.1s linear;
+}
+
+.thr-roulette__wheel canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Center circle overlay */
+.thr-roulette__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #0d4f36, #0a3d2a);
+  border: 3px solid var(--color-gold-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  z-index: 5;
+  box-shadow:
+    0 0 20px rgba(201, 168, 76, 0.4),
+    inset 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+/* Spin Button */
+.thr-roulette__spin-btn {
+  position: relative;
+  padding: 18px 50px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #c9a84c 0%, #f0d27c 50%, #c9a84c 100%);
+  color: var(--color-bg-dark);
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-out-back);
+  border: 2px solid rgba(201, 168, 76, 0.6);
+  box-shadow:
+    0 4px 20px rgba(201, 168, 76, 0.4),
+    0 0 40px rgba(201, 168, 76, 0.1);
+  margin-bottom: var(--space-lg);
+  overflow: hidden;
+}
+
+.thr-roulette__spin-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  animation: btnShine 3s ease-in-out infinite;
+}
+
+@keyframes btnShine {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) rotate(45deg); }
+}
+
+.thr-roulette__spin-btn:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 6px 30px rgba(201, 168, 76, 0.6),
+    0 0 60px rgba(201, 168, 76, 0.2);
+}
+
+.thr-roulette__spin-btn:active {
+  transform: scale(0.95);
+}
+
+.thr-roulette__spin-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.thr-roulette__spin-btn-text {
+  position: relative;
+  z-index: 2;
+}
+
+/* Result Panel */
+.thr-roulette__result {
+  background: var(--gradient-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: var(--space-xl) var(--space-lg);
+  margin-bottom: var(--space-lg);
+  animation: resultSlideIn 0.6s var(--ease-out-back);
+}
+
+@keyframes resultSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.thr-roulette__result-emoji {
+  font-size: 4rem;
+  margin-bottom: var(--space-md);
+  animation: resultEmojiBounce 0.6s var(--ease-out-back) 0.2s both;
+}
+
+@keyframes resultEmojiBounce {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.thr-roulette__result-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-sm);
+}
+
+.thr-roulette__result-text {
+  font-size: var(--fs-base);
+  color: var(--color-white-80);
+  line-height: 1.7;
+  margin-bottom: var(--space-lg);
+  font-weight: 300;
+}
+
+/* Retry Button */
+.thr-roulette__retry-btn {
+  padding: 12px 30px;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-gold-400);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out-back);
+  border: 1px solid var(--color-gold-500);
+}
+
+.thr-roulette__retry-btn:hover {
+  background: rgba(201, 168, 76, 0.1);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(201, 168, 76, 0.2);
+}
+
+/* Disclaimer */
+.thr-roulette__disclaimer {
+  font-size: var(--fs-xs);
+  color: var(--color-white-40);
+  font-style: italic;
+  margin-top: var(--space-sm);
+}
+
+
+/* === 14.5 TEKA-TEKI MODAL === */
+
+.teka-teki-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(4, 31, 21, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  padding: var(--space-md);
+}
+
+.teka-teki-modal[hidden] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.teka-teki-modal__content {
+  background: var(--gradient-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-lg);
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(201, 168, 76, 0.1);
+  transform: scale(1);
+  transition: transform 0.4s var(--ease-out-back);
+}
+
+.teka-teki-modal[hidden] .teka-teki-modal__content {
+  transform: scale(0.9);
+}
+
+.teka-teki-modal__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  color: var(--color-gold-300);
+  margin-bottom: var(--space-sm);
+}
+
+.teka-teki-modal__text {
+  font-size: var(--fs-base);
+  color: var(--color-white-80);
+  margin-bottom: var(--space-md);
+}
+
+.teka-teki-modal__riddle {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  color: var(--color-gold-400);
+  font-style: italic;
+  margin-bottom: var(--space-lg);
+  padding: var(--space-sm);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--color-gold-500);
+  white-space: pre-line;
+}
+
+.teka-teki-modal__input {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  margin-bottom: var(--space-sm);
+  text-align: center;
+  transition: var(--transition-fast);
+}
+
+.teka-teki-modal__input:focus {
+  outline: none;
+  border-color: var(--color-gold-400);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 15px rgba(201, 168, 76, 0.2);
+}
+
+.teka-teki-modal__error {
+  color: #ff6b6b;
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-md);
+  animation: shakeError 0.4s ease-in-out;
+}
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.teka-teki-modal__buttons {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  margin-top: var(--space-md);
+}
+
+.teka-teki-modal__btn {
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  letter-spacing: 1px;
+  transition: var(--transition-fast);
+}
+
+.teka-teki-modal__btn--submit {
+  background: var(--gradient-gold);
+  color: var(--color-bg-dark);
+  flex: 2;
+  box-shadow: 0 4px 15px rgba(201, 168, 76, 0.3);
+}
+
+.teka-teki-modal__btn--submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 168, 76, 0.4);
+}
+
+.teka-teki-modal__btn--cancel {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-white-80);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  flex: 1;
+}
+
+.teka-teki-modal__btn--cancel:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--color-white);
+}
+
+/* === MINI CONFETTI FIX === */
+.maafin-card__success-confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 5;
+  border-radius: var(--radius-lg);
+}
+
+.mini-confetti {
+  position: absolute;
+  border-radius: 2px;
+  animation-name: miniConfettiFall;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@keyframes miniConfettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(200px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+
