@@ -917,6 +917,168 @@
   };
 
   /* ============================================
+     9.9. TEKA TEKI DANA KAGET
+     ============================================ */
+  const TekaTekiDana = {
+    btn: null,
+    modal: null,
+    input: null,
+    errorObj: null,
+    submitBtn: null,
+    cancelBtn: null,
+    riddleText: null,
+    questionView: null,
+    successView: null,
+    realLink: null,
+    closeSuccessBtn: null,
+    targetUrl: '',
+
+    riddles: [
+      {
+        question: 'Tahap 1 :\nBerapakah hasil dari 2 dikali 5?',
+        answers: ['10', 'sepuluh']
+      },
+      {
+        question: 'Tahap 2 :\nBerapakah hasil dahi hitungan berikut ini:\n(40²) - (300 ÷ 2) - 3 = ?\n\n(Petunjuk misal mau cepet: jawabanya adalah angka yang lumayan sering di sebut di bulan ini )',
+        answers: ['1447', 'seribu empat ratus empat puluh tujuh']
+      }
+    ],
+    currentStep: 0,
+
+    init() {
+      this.btn = document.querySelector('.dana-kaget-btn');
+      this.modal = document.getElementById('teka-teki-modal');
+      this.input = document.getElementById('teka-teki-input');
+      this.errorObj = document.getElementById('teka-teki-error');
+      this.submitBtn = document.getElementById('teka-teki-submit');
+      this.cancelBtn = document.getElementById('teka-teki-cancel');
+      this.riddleText = document.querySelector('.teka-teki-modal__riddle');
+      this.questionView = document.getElementById('teka-teki-question-view');
+      this.successView = document.getElementById('teka-teki-success-view');
+      this.realLink = document.getElementById('teka-teki-real-link');
+      this.closeSuccessBtn = document.getElementById('teka-teki-close-success');
+
+      if (!this.btn || !this.modal) return;
+
+      this.targetUrl = this.btn.href;
+
+      // Override the link behavior
+      this.btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.openModal();
+      });
+
+      this.submitBtn.addEventListener('click', () => this.checkAnswer());
+      this.cancelBtn.addEventListener('click', () => this.closeModal());
+      if (this.closeSuccessBtn) {
+        this.closeSuccessBtn.addEventListener('click', () => this.closeModal());
+      }
+      
+      this.input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          this.checkAnswer();
+        }
+      });
+      
+      this.input.addEventListener('input', () => {
+        this.errorObj.hidden = true;
+        this.errorObj.style.color = ''; // Reset color
+      });
+    },
+
+    openModal() {
+      this.currentStep = 0;
+      this.riddleText.textContent = this.riddles[this.currentStep].question;
+      
+      this.input.value = '';
+      this.errorObj.hidden = true;
+      
+      if (this.questionView && this.successView) {
+        this.questionView.hidden = false;
+        this.successView.hidden = true;
+      }
+
+      this.modal.hidden = false;
+      this.modal.setAttribute('aria-hidden', 'false');
+      
+      setTimeout(() => this.input.focus(), 100);
+    },
+
+    closeModal() {
+      this.modal.hidden = true;
+      this.modal.setAttribute('aria-hidden', 'true');
+    },
+
+    checkAnswer() {
+      const userAnswer = this.input.value.trim().toLowerCase();
+      
+      if (!userAnswer) {
+        this.showError('Isi dulu dong jawaban angka kamu! 😋');
+        return;
+      }
+
+      // Khusus angka / teks yang match
+      const isCorrect = this.riddles[this.currentStep].answers.some(ans => userAnswer.includes(ans));
+
+      if (isCorrect) {
+        if (this.currentStep < this.riddles.length - 1) {
+          // Pindah ke soal berikutnya
+          this.currentStep++;
+          this.riddleText.textContent = this.riddles[this.currentStep].question;
+          this.input.value = '';
+          this.input.focus();
+          
+          // Pesan sukses kecil
+          this.errorObj.style.color = '#5cb585';
+          this.errorObj.textContent = 'Benar! Sekarang lanjut soal terakhir...';
+          this.errorObj.hidden = false;
+          
+          this.errorObj.style.animation = 'none';
+          void this.errorObj.offsetWidth;
+          this.errorObj.style.animation = 'shakeError 0.4s ease-in-out';
+          
+          setTimeout(() => {
+            if (this.errorObj.style.color === 'rgb(92, 181, 133)') { // #5cb585
+              this.errorObj.hidden = true;
+            }
+          }, 2500);
+          
+        } else {
+          // Lolos semua soal
+          if (this.questionView && this.successView && this.realLink) {
+            this.questionView.hidden = true;
+            this.successView.hidden = false;
+            this.realLink.href = this.targetUrl;
+          } else {
+            // Fallback
+            this.closeModal();
+            setTimeout(() => {
+              window.open(this.targetUrl, '_blank', 'noopener,noreferrer');
+            }, 300);
+          }
+          
+          if (typeof Confetti !== 'undefined') Confetti.start();
+        }
+      } else {
+        // Jawaban Salah
+        this.showError('Tetot! Hitungannya salah tuh, coba lagi! 🤪');
+        this.input.value = '';
+        this.input.focus();
+        
+        this.errorObj.style.animation = 'none';
+        void this.errorObj.offsetWidth;
+        this.errorObj.style.animation = 'shakeError 0.4s ease-in-out';
+      }
+    },
+    
+    showError(msg) {
+      this.errorObj.style.color = '#ff6b6b';
+      this.errorObj.textContent = msg;
+      this.errorObj.hidden = false;
+    }
+  };
+
+  /* ============================================
      10. INITIALIZATION
      ============================================ */
   function init() {
@@ -932,6 +1094,7 @@
     ThrRoulette.init();
     CountdownTimer.init();
     BackToTop.init();
+    TekaTekiDana.init();
   }
 
   // Run when DOM is ready

@@ -1913,6 +1913,149 @@ blockquote {
 }
 
 /* ==============================================
+   14.5 TEKA-TEKI MODAL
+   ============================================== */
+.teka-teki-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(4, 31, 21, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  padding: var(--space-md);
+}
+
+.teka-teki-modal[hidden] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.teka-teki-modal__content {
+  background: var(--gradient-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-lg);
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(201, 168, 76, 0.1);
+  transform: scale(1);
+  transition: transform 0.4s var(--ease-out-back);
+}
+
+.teka-teki-modal[hidden] .teka-teki-modal__content {
+  transform: scale(0.9);
+}
+
+.teka-teki-modal__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  color: var(--color-gold-300);
+  margin-bottom: var(--space-sm);
+}
+
+.teka-teki-modal__text {
+  font-size: var(--fs-base);
+  color: var(--color-white-80);
+  margin-bottom: var(--space-md);
+}
+
+.teka-teki-modal__riddle {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  color: var(--color-gold-400);
+  font-style: italic;
+  margin-bottom: var(--space-lg);
+  padding: var(--space-sm);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--color-gold-500);
+  white-space: pre-line;
+}
+
+.teka-teki-modal__input {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  margin-bottom: var(--space-sm);
+  text-align: center;
+  transition: var(--transition-fast);
+}
+
+.teka-teki-modal__input:focus {
+  outline: none;
+  border-color: var(--color-gold-400);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 15px rgba(201, 168, 76, 0.2);
+}
+
+.teka-teki-modal__error {
+  color: #ff6b6b;
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-md);
+  animation: shakeError 0.4s ease-in-out;
+}
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.teka-teki-modal__buttons {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  margin-top: var(--space-md);
+}
+
+.teka-teki-modal__btn {
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  letter-spacing: 1px;
+  transition: var(--transition-fast);
+}
+
+.teka-teki-modal__btn--submit {
+  background: var(--gradient-gold);
+  color: var(--color-bg-dark);
+  flex: 2;
+  box-shadow: 0 4px 15px rgba(201, 168, 76, 0.3);
+}
+
+.teka-teki-modal__btn--submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 168, 76, 0.4);
+}
+
+.teka-teki-modal__btn--cancel {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-white-80);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  flex: 1;
+}
+
+.teka-teki-modal__btn--cancel:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--color-white);
+}
+
+/* ==============================================
    15. RESPONSIVE DESIGN
    ============================================== */
 

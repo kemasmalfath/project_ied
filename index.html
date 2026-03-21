@@ -325,7 +325,7 @@
             
 
             <div class="dana-kaget-wrapper">
-              <a href="https://link.dana.id/danakaget?c=s9t2r28lm&r=j2JOtV&orderId=20260320101214275715010300166974770520466" class="maafin-btn maafin-btn--yes dana-kaget-btn" target="_blank" rel="noopener noreferrer">
+              <a href="https://link.dana.id/danakaget?c=sqpwpv5dm&r=j2JOtV&orderId=20260321101214855515010300166974770735624" class="maafin-btn maafin-btn--yes dana-kaget-btn" target="_blank" rel="noopener noreferrer">
                 🎁 Ambil DANA Kaget 🎁
               </a>
               
@@ -352,6 +352,10 @@
             THR Yang Kamu Dapatkan
           </h2>
           <div class="section-header__divider scroll-animate" data-animation="scale-in" aria-hidden="true"></div>
+          
+          <p class="section-header__info scroll-animate" data-animation="fade-up" style="margin-top: 1rem; color: var(--color-gold-300); font-style: italic; font-size: var(--fs-base); text-shadow: 0 0 10px rgba(0,0,0,0.5);">
+            "Kalo tadi kamu nggak kebagian atau kehabisan DANA Kaget,<br>gak usah sedih... mending coba buka keberuntungan kamu pakai roda ini gih! 🤩"
+          </p>
         </header>
 
         <div class="thr-roulette scroll-animate" data-animation="fade-up">
@@ -431,6 +435,42 @@
       <path d="M18 15l-6-6-6 6"/>
     </svg>
   </button>
+
+
+
+  <!-- ============================================
+       TEKA TEKI MODAL
+  ============================================= -->
+  <div id="teka-teki-modal" class="teka-teki-modal" aria-hidden="true" hidden>
+    <div class="teka-teki-modal__content">
+      
+      <!-- TAMPILAN PERTANYAAN -->
+      <div id="teka-teki-question-view">
+        <h3 class="teka-teki-modal__title">Eits, Tunggu Dulu! 🛑</h3>
+        <p class="teka-teki-modal__text">Sebelum ambil DANA Kaget beneran, jawab hitung-hitungan ini dulu ya:</p>
+        <p class="teka-teki-modal__riddle">"Hijau, dibungkus anyaman daun kelapa, isinya beras yang dimasak. Apakah aku?"</p>
+        <input type="text" id="teka-teki-input" class="teka-teki-modal__input" placeholder="Jawaban kamu..." autocomplete="off" />
+        <p id="teka-teki-error" class="teka-teki-modal__error" hidden>Tetot! Jawaban salah, coba lagi! 🤪</p>
+        <div class="teka-teki-modal__buttons">
+          <button id="teka-teki-submit" class="teka-teki-modal__btn teka-teki-modal__btn--submit">Jawab</button>
+          <button id="teka-teki-cancel" class="teka-teki-modal__btn teka-teki-modal__btn--cancel">Batal</button>
+        </div>
+      </div>
+
+      <!-- TAMPILAN SUKSES / BERHASIL MENEBAK -->
+      <div id="teka-teki-success-view" hidden>
+        <h3 class="teka-teki-modal__title" style="color: var(--color-gold-300); font-size: 2rem; margin-bottom: 20px;">Selamat! 🎉</h3>
+        <p class="teka-teki-modal__text" style="font-size: 1.1rem; line-height: 1.6;">Luar biasa! Kamu berhasil menjawab semua hitungan rumit ini dengan benar. Otak kamu sangat cerdas! 💯</p>
+        <p class="teka-teki-modal__text" style="margin-bottom: 30px;">Ini dia link hadiah yang sesungguhnya:</p>
+        
+        <a id="teka-teki-real-link" href="#" class="teka-teki-modal__btn teka-teki-modal__btn--submit" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: block; padding: 14px; text-transform: uppercase;">
+          🎁 Ambil DANA Kaget 🎁
+        </a>
+        <button id="teka-teki-close-success" class="teka-teki-modal__btn teka-teki-modal__btn--cancel" style="margin-top: 15px; width: 100%;">Tutup Jendela Ini</button>
+      </div>
+
+    </div>
+  </div>
 
   <!-- ============================================
        FOOTER
